@@ -1,13 +1,13 @@
-#!/usr/bin/python3
+#!/usr/bin/env -S python3 -O
 
 import os
 import sys
 
-FIFO = '/run/wait-online/204.cond'
+FIFO = '/tmp/wait-online.cond'
 
 def wait_on(fifo):
   if not os.path.exists(fifo):
-    return 'check_204 program is not running on %s' % fifo
+    return 'check program is not running on %s' % fifo
 
   fd = os.open(fifo, os.O_RDONLY)
   os.close(fd)

@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        ".extra-symlink-search-path",
+        ".extra-symlink-search-path/site-packages"
+    ]
+}
