@@ -15,6 +15,13 @@ pkgs.mkShell {
   ];
   shellHook = ''
     if [ ! -d ${extra_search_directory} ]; then mkdir ${extra_search_directory}; fi
-    if [ ! -h ${extra_search_directory}/site-packages ]; then ln -s ${pyenv}/${using_python.sitePackages} ${extra_search_directory}/site-packages; fi
+    symlink_extra_path(){
+      actual_link_path=$(readlink -f ${extra_search_directory}/$1)
+      if [ $actual_link_path != $2 ]; then
+        rm ${extra_search_directory}/$1 > /dev/null 2>&1
+      fi
+      if [ ! -h ${extra_search_directory}/$1 ]; then ln -s $2 ${extra_search_directory}/$1; fi
+    }
+    symlink_extra_path site-packages ${pyenv}/${using_python.sitePackages}
   '';
 }
